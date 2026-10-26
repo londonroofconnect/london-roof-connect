@@ -1,12 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { createClient } from "@supabase/supabase-js";
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-);
 
 export default function QuoteForm() {
   const [name, setName] = useState("");
@@ -31,28 +25,29 @@ export default function QuoteForm() {
     setSending(true);
     setMessage("");
 
-    const { error } = await supabase.from("leads").insert({
-      name,
-      postcode,
-      phone,
-      job_type: jobType,
-      description
-    });
+    try {
+      const response = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, postcode, phone, jobType, description }),
+      });
 
-    if (error) {
+      if (!response.ok) {
+        throw new Error("Unable to submit roofing enquiry.");
+      }
+
+      setMessage("Thanks — your roofing enquiry has been received.");
+      setName("");
+      setPostcode("");
+      setPhone("");
+      setJobType("Roof repair");
+      setDescription("");
+    } catch (error) {
       console.error(error);
       setMessage("Something went wrong. Please try again.");
+    } finally {
       setSending(false);
-      return;
     }
-
-    setMessage("Thanks — your roofing enquiry has been received.");
-    setName("");
-    setPostcode("");
-    setPhone("");
-    setJobType("Roof repair");
-    setDescription("");
-    setSending(false);
   }
 
   return (

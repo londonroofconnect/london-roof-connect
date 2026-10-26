@@ -2,6 +2,34 @@ import { getSupabaseAdmin } from "../../../lib/server-clients";
 
 export const dynamic = "force-dynamic";
 
+export async function POST(request) {
+  try {
+    const body = await request.json();
+    const lead = {
+      name: body?.name?.trim(),
+      postcode: body?.postcode?.trim(),
+      phone: body?.phone?.trim(),
+      job_type: body?.jobType?.trim(),
+      description: body?.description?.trim(),
+    };
+
+    if (Object.values(lead).some((value) => !value)) {
+      return Response.json({ error: "Please complete all enquiry fields." }, { status: 400 });
+    }
+
+    const { error } = await getSupabaseAdmin().from("leads").insert(lead);
+    if (error) throw error;
+
+    return Response.json({ success: true }, { status: 201 });
+  } catch (error) {
+    console.error("Unable to submit roofing enquiry:", error);
+    return Response.json(
+      { error: "Unable to submit your enquiry right now." },
+      { status: 500 },
+    );
+  }
+}
+
 export async function GET() {
   try {
     const now = new Date().toISOString();
