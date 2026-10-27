@@ -1,20 +1,9 @@
-export default function Home() {
-  const box = {
-    width: "100%",
-    boxSizing: "border-box",
-    padding: "14px",
-    border: "1px solid #ccd6e0",
-    borderRadius: "9px",
-    fontSize: "16px"
-  };
+import QuoteForm from "./quote-form";
 
+export default function Home() {
   return (
     <main style={{ fontFamily: "Arial, sans-serif", color: "#102a43", margin: 0 }}>
-      <header style={{
-        background: "#0b1f33",
-        color: "white",
-        padding: "20px"
-      }}>
+      <header style={{ background: "#0b1f33", color: "white", padding: "20px" }}>
         <div style={{
           maxWidth: "1000px",
           margin: "auto",
@@ -108,80 +97,17 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="quote" style={{
-        background: "#f4f7fa",
-        padding: "55px 20px"
-      }}>
+      <section id="quote" style={{ background: "#f4f7fa", padding: "55px 20px" }}>
         <div style={{ maxWidth: "700px", margin: "auto" }}>
           <h2 style={{ fontSize: "32px" }}>Get a free roofing quote</h2>
-
           <p>Tell us what work you need.</p>
 
-          <form
-            action="mailto:info@londonroofconnect.com"
-            method="post"
-            encType="text/plain"
-            style={{ display: "grid", gap: "13px" }}
-          >
-            <input name="Name" required placeholder="Your name" style={box} />
-
-            <input
-              name="Postcode"
-              required
-              placeholder="London postcode"
-              style={box}
-            />
-
-            <input
-              name="Phone"
-              required
-              type="tel"
-              placeholder="Phone number"
-              style={box}
-            />
-
-            <select name="Job type" style={box}>
-              <option>Roof repair</option>
-              <option>Roof leak</option>
-              <option>New roof</option>
-              <option>Flat roof</option>
-              <option>Guttering</option>
-              <option>Chimney work</option>
-              <option>Other roofing work</option>
-            </select>
-
-            <textarea
-              name="Job details"
-              required
-              rows="6"
-              placeholder="Tell us about the roofing work you need"
-              style={box}
-            />
-
-            <button
-              type="submit"
-              style={{
-                background: "#0b1f33",
-                color: "white",
-                border: 0,
-                padding: "16px",
-                borderRadius: "9px",
-                fontSize: "17px",
-                fontWeight: "bold"
-              }}
-            >
-              Send Roofing Enquiry
-            </button>
-          </form>
+          <QuoteForm />
         </div>
       </section>
 
-      <section style={{
-        textAlign: "center",
-        padding: "55px 20px"
-      }}>
+      <section style={{ textAlign: "center", padding: "55px 20px" }}>
         <h2>Are you a London roofer?</h2>
-
         <p>Find homeowners looking for roofing work across London.</p>
 
         <a href="/roofer" style={{
